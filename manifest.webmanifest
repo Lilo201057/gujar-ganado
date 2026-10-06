@@ -1,7 +1,7 @@
 {
   "name": "GUJAR Ganado",
   "short_name": "GUJAR",
-  "start_url": "./v2.html?v=4230",
+  "start_url": "./v2.html?v=4240",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f4f7f5",
