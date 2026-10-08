@@ -1,10 +1,25 @@
 {
+  "id": "./",
   "name": "GUJAR Ganado",
   "short_name": "GUJAR",
-  "start_url": "./v2.html?v=4251",
+  "start_url": "./v2.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f4f7f5",
   "theme_color": "#155b3d",
-  "description": "Gestión ganadera GUJAR"
+  "description": "Gestión ganadera GUJAR",
+  "icons": [
+    {
+      "src": "icons/gujar-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/gujar-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }
