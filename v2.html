@@ -339,8 +339,8 @@ const HealthTrial=createHealthQueue(true);
 const HealthReal=createHealthQueue(false);
 
 async function restoreGUJAROfflineSession(){
- if(gujarToken()!=='offline')return gujarToken()!==K;
  if(restoreGUJAROfflineSession.pending)return restoreGUJAROfflineSession.pending;
+ if(gujarToken()!=='offline')return gujarToken()!==K;
  restoreGUJAROfflineSession.pending=(async()=>{
   const own=String(currentGUJARUser()?.id||'');let cached;
   try{cached=JSON.parse(localStorage.getItem('gujar_offline_auth')||'null')}catch{return false}
