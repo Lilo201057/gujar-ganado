@@ -3,7 +3,7 @@
 .chartSex{display:flex;flex-wrap:wrap;gap:6px;border:0;padding:0;margin:10px 0;min-width:0}.chartSex label{position:relative;cursor:pointer}.chartSex input{position:absolute;opacity:0;width:1px;height:1px;margin:0;padding:0}.chartSex span{display:flex;align-items:center;min-height:44px;padding:0 12px;border:1px solid #dce4df;border-radius:12px;color:#155b3d;background:#fff;font-size:14px;font-weight:700}.chartSex input:checked+span{color:#fff;background:#155b3d;border-color:#155b3d}.chartSex input:focus-visible+span{outline:2px solid #155b3d;outline-offset:2px}.weightChart .wlab{white-space:normal;line-height:1.4}.forecastBars .wbar.forecastImmediate{background:#ce641b}.forecastMore{display:block;margin-top:12px}@media(max-width:420px){.weightChart{gap:3px;padding-inline:0}.weightChart .forecastBar{padding-inline:0}.forecastBars .wlab{font-size:9px}}
 #rfidDialog{width:min(440px,calc(100% - 32px));margin:auto;color:inherit}#rfidDialog::backdrop{background:#13251b99}#rfidDialog button{margin:4px 0}
 .stageChart{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stageGroup{min-width:0;text-align:center}.stageBars{display:flex;align-items:flex-end;min-height:152px;gap:4px}.stageBars .stageFemale{background:#426695}.stageName{display:block;margin:6px 0}.stageRange{display:block;line-height:1.3}@media(max-width:560px){.stageChart{grid-template-columns:repeat(2,minmax(0,1fr))}}</style></head><body><div id="userBadge" class="userBadge" style="position:fixed;z-index:50;top:14px;left:50%;transform:translateX(-50%);display:none"><span id="userWho"></span><button id="usersBtn" class="logoutBtn" style="display:none" onclick="openUsers()">Usuarios</button><button id="testModeBtn" class="logoutBtn" onclick="toggleTestMode()">Modo prueba</button><button class="logoutBtn" onclick="gujarLogout()">Cerrar sesión</button></div><div id="usersModal" class="modal"><div class="sheet usersSheet"><div class="sheetHead"><b>Administrar usuarios</b><button class="x" onclick="closeUsers()">×</button></div><div id="usersList"></div><div class="usersDivider"></div><h3 class="usersTitle">Nuevo usuario</h3><div class="usersForm"><label><span>Nombre</span><input id="uNombre" placeholder="Nombre completo"></label><label><span>Celular</span><input id="uCel" inputmode="numeric" maxlength="10" placeholder="300 000 0000"></label><label><span>Rol</span><select id="uRol"><option>Oficina</option><option>Mayordomo</option><option>Vaquero</option><option>Administrador</option></select></label><fieldset class="farmBox"><legend>Fincas autorizadas</legend><label class="checkRow"><input type="checkbox" id="uIns"><span>La Insula</span></label><label class="checkRow"><input type="checkbox" id="uMon"><span>Montecristo</span></label></fieldset></div><button class="btn wide" style="margin-top:18px" onclick="saveUser()">Crear usuario</button><div class="muted" style="margin-top:10px">El usuario creará su propio PIN de 4 números en su primer ingreso.</div></div></div><section id="loginPreview" class="loginPreview"><div class="loginBox"><a href="instalar.html" style="display:block;margin-bottom:18px;color:#155b3d;font-weight:bold">Instalar GUJAR en este celular</a><div class="loginLogo">GUJAR</div><div class="muted" style="margin-bottom:20px">Gestión ganadera</div><label class="label">Número de celular</label><input id="loginCel" inputmode="numeric" maxlength="10" placeholder="300 000 0000"><label class="label">PIN de 4 números</label><input id="loginPin" class="pinInput" inputmode="numeric" type="password" maxlength="4" placeholder="••••"><div id="loginErr" class="loginErr"></div><button class="btn wide" onclick="previewLogin()">Ingresar</button><div class="loginNote">Primer ingreso: escriba su celular y el PIN de 4 números que quiera crear. Después usará el mismo PIN para ingresar.</div><button class="chip wide" style="margin-top:14px" onclick="location.href=location.pathname+'?v=43617'">Volver a GUJAR</button></div></section>
-<header><div class="brand">GUJAR Ganado <small>V4.36.31</small></div><select id="farm" class="farm" onchange="farmChanged()"> <option>Montecristo</option><option>La Insula</option></select></header>
+<header><div class="brand">GUJAR Ganado <small>V4.36.32</small></div><select id="farm" class="farm" onchange="farmChanged()"> <option>Montecristo</option><option>La Insula</option></select></header>
 <main class="wrap"><div id="cloud" class="status">Conectando...</div>
 <section id="home" class="view on"><h2>Control de ceba</h2><p><button type="button" class="chip" onclick="go('equipment')">Conexión de equipos</button></p><div class="hero"><div>Inventario · <span id="hf"></span></div><div class="big" id="n">0</div><div>animales activos</div><h3><span id="kg">0</span> kg · <span id="avg">0</span> kg promedio</h3></div><div class="grid"><div class="card metric"><span class="label">GMD promedio</span><b id="gmd">—</b><small>g/día</small></div><div class="card metric" style="cursor:pointer" onclick="showForecastBucket(0,90,'home',false)"><span class="label">Venta ≤90 días</span><b id="v90">0</b><small>animales · tocar para ver</small></div></div><div class="card alertBox"><div class="row"><b>⚠ Alertas de GMD bajo</b><span id="alertCount" class="tag">0</span></div><div id="gpdAlerts"><p class="muted">Sin alertas.</p></div><div class="row" style="flex-wrap:wrap;gap:8px;margin-top:10px"><button class="chip" onclick="gujarAlertTone('low')">Probar GMD bajo</button><button class="chip" onclick="gujarAlertTone('sale')">Probar venta próxima</button></div></div><div class="card"><b class="chartTitle">Animales por rango de peso</b><fieldset class="chartSex" aria-label="Sexo para rangos de peso"><label><input type="radio" name="weightSex" value="" checked onchange="renderWeightChart()"><span>Todos</span></label><label><input type="radio" name="weightSex" value="Macho" onchange="renderWeightChart()"><span>Machos</span></label><label><input type="radio" name="weightSex" value="Hembra" onchange="renderWeightChart()"><span>Hembras</span></label></fieldset><fieldset class="chartSex" aria-label="Peso"><label><input type="radio" name="weightBasis" value="recorded" checked onchange="renderWeightChart()"><span>Último pesaje</span></label><label><input type="radio" name="weightBasis" value="estimated" id="estimatedWeightBasis" onchange="renderWeightChart()"><span>Peso estimado hoy</span></label></fieldset><div id="weightChart" class="weightChart"></div><small id="weightChartNote" class="muted" aria-live="polite"></small></div><div class="card"><b>GMD real por rango (g/día)</b><p class="muted">Número de animales · Toque una barra para verlos</p><div class="row"><label><input id="gmdMale" type="checkbox" checked onchange="renderGmdChart()"> Machos</label><label><input id="gmdFemale" type="checkbox" checked onchange="renderGmdChart()"> Hembras</label></div><div id="gmdChart" class="gmdChart"></div><small id="gmdChartNote" class="muted"></small></div><div class="card"><div class="row"><b>Proyección de ventas</b><button class="chip" onclick="go('sales')">Ver ›</button></div><fieldset class="chartSex" aria-label="Sexo para proyección de ventas"><label><input type="radio" name="forecastSex" value="" checked onchange="changeForecastSex(this.value)"><span>Todos</span></label><label><input type="radio" name="forecastSex" value="Macho" onchange="changeForecastSex(this.value)"><span>Machos</span></label><label><input type="radio" name="forecastSex" value="Hembra" onchange="changeForecastSex(this.value)"><span>Hembras</span></label></fieldset><div id="summary"></div></div><div class="card"><b class="chartTitle">Animales por etapa</b><fieldset class="chartSex" aria-label="Peso para etapas"><label><input type="radio" name="stageBasis" value="recorded" checked onchange="renderStageChart()"><span>Último pesaje</span></label><label><input type="radio" name="stageBasis" value="estimated" id="estimatedStageBasis" onchange="renderStageChart()"><span>Peso estimado hoy</span></label></fieldset><div id="stageChart" class="stageChart"></div><small id="stageChartNote" class="muted" aria-live="polite"></small></div><div class="card"><div class="row"><b>Últimos movimientos</b><button class="chip" onclick="go('records')">Todos ›</button></div><div id="recent"></div></div></section>
 <section id="records" class="view"><button class="chip" onclick="go('home')">← Volver a Inicio</button><h2>Registros</h2><button type="button" class="btn wide createOnly" onclick="Jornada.open()">Jornada de vacunación y pesaje</button><div id="pendingSales"></div><div id="purchaseHistory"></div><input id="rq" placeholder="🔎 Buscar eventos, animal o tercero..." oninput="records()"><div id="events"></div><button class="fab createOnly" onclick="openNew()">＋ Nuevo</button></section>
@@ -58,8 +58,8 @@
   </div>
 </section>
 <section id="detail" class="view"><div id="dbody"></div></section>
-<section id="weigh" class="view"><h2>Nuevo pesaje</h2><label class="label">Identificar animal</label><input id="wq" inputmode="numeric" autocomplete="off" placeholder="Leer chip, últimos 4 dígitos o ID visual" oninput="findWeightAnimal()"><button type="button" class="chip createOnly" data-rfid="wq">Leer chip RFID</button><input type="hidden" id="wa"><div class="rfidHint">Acerque el lector RFID o escriba los últimos 4 dígitos del chip o el ID visual.</div><div id="wi" class="card"><span class="muted">Esperando identificación del animal…</span></div><input id="wd" type="date" onchange="previewWeightGMD()"><input id="wk" type="number" step=".1" placeholder="Peso (kg)" oninput="previewWeightGMD()"><button type="button" class="chip" onclick="MatrixScale.capture()">Tomar peso del Matrix BT</button><div id="wgmd"></div><textarea id="wn" placeholder="Observación"></textarea><button class="btn wide" onclick="saveWeight()">Guardar pesaje</button><div id="wm"></div></section>
-<section id="purchase" class="view"><div id="testBanner" class="status" style="display:none;background:#fff3cd"><b>MODO PRUEBA</b> · Nada de esta prueba se guardará.</div><button class="chip" onclick="go('records')">‹ Volver</button><h2>Ingreso de animales</h2><div id="phead"><div class="card"><label>Fecha<input id="pd" type="date"></label><label>Proveedor<input id="pprov" placeholder="Nombre del proveedor"></label><div class="grid economic"><label>Precio $/kg<input id="pprice" type="text" inputmode="numeric" placeholder="$ 0" oninput="moneyFmt(this)"></label><label>Flete total $<input id="pfreight" type="text" inputmode="numeric" placeholder="$ 0" oninput="moneyFmt(this)"></label></div><label>Cantidad esperada<input id="pexp" type="number"></label><label>Observaciones<textarea id="pobs"></textarea></label><button class="btn wide" onclick="startPurchase()">Crear ingreso y agregar animales</button></div></div><div id="pbody" class="hide"><div class="card"><div class="row"><b id="ptitle">Compra</b><span class="tag" id="pcount">0 animales</span></div><div id="plist"></div></div><div class="card"><h3>Agregar animal</h3><input id="pv" placeholder="Número visual (o chip)"><input id="prfid" inputmode="numeric" placeholder="RFID / chip completo"><button type="button" class="chip createOnly" data-rfid="prfid">Leer chip RFID</button><p id="gujarBleInline" class="muted" role="status">Bastón: conecte desde «Conexión de equipos» y escanee aquí directamente.</p><div class="rfidHint">Para buscar animales existentes puede escribir solo los <span class="rfidLast">últimos 4 dígitos</span>.</div><div class="grid"><input id="pw" type="number" step=".1" placeholder="Peso kg *"><select id="psex" class="field"><option>Macho</option><option>Hembra</option></select></div><select id="pcolor" class="field"><option value="">Color</option><option>Negro</option><option>Blanco</option><option>Rojo</option><option>Café</option><option>Amarillo/Bayo</option><option>Gris/Cenizo</option><option>Barcino</option><option>Pintado/Manchado</option></select><input id="pmarks" placeholder="Señas particulares"><textarea id="paobs" placeholder="Observaciones del animal"></textarea><label class="photoPick">📷 Foto del animal<input id="pphoto" type="file" accept="image/*" capture="environment" style="display:none" onchange="photoChosen(this,'ppreview')"></label><div id="ppreview" class="muted"></div><button class="btn wide" onclick="addPurchaseAnimal()">＋ Agregar animal</button></div><button class="btn wide" onclick="finishPurchase()">✓ Cerrar ingreso</button></div></section>
+<section id="weigh" class="view"><h2>Nuevo pesaje</h2><label class="label">Identificar animal</label><input id="wq" inputmode="numeric" autocomplete="off" placeholder="Leer chip, últimos 4 dígitos o ID visual" oninput="findWeightAnimal()"><button type="button" class="chip createOnly" data-rfid="wq">Leer chip RFID</button><input type="hidden" id="wa"><div class="rfidHint">Acerque el lector RFID o escriba los últimos 4 dígitos del chip o el ID visual.</div><div id="wi" class="card"><span class="muted">Esperando identificación del animal…</span></div><input id="wd" type="date" onchange="previewWeightGMD()"><input id="wk" aria-label="Peso en kilogramos" style="font-size:1.65rem;font-weight:700" type="number" step=".1" placeholder="Peso (kg)" oninput="previewWeightGMD()"><div id="wgmd"></div><textarea id="wn" placeholder="Observación"></textarea><button class="btn wide" onclick="saveWeight()">Guardar pesaje</button><div id="wm"></div></section>
+<section id="purchase" class="view"><div id="testBanner" class="status" style="display:none;background:#fff3cd"><b>MODO PRUEBA</b> · Nada de esta prueba se guardará.</div><button class="chip" onclick="go('records')">‹ Volver</button><h2>Ingreso de animales</h2><div id="phead"><div class="card"><label>Fecha<input id="pd" type="date"></label><label>Proveedor<input id="pprov" placeholder="Nombre del proveedor"></label><div class="grid economic"><label>Precio $/kg<input id="pprice" type="text" inputmode="numeric" placeholder="$ 0" oninput="moneyFmt(this)"></label><label>Flete total $<input id="pfreight" type="text" inputmode="numeric" placeholder="$ 0" oninput="moneyFmt(this)"></label></div><label>Cantidad esperada<input id="pexp" type="number"></label><label>Observaciones<textarea id="pobs"></textarea></label><button class="btn wide" onclick="startPurchase()">Crear ingreso y agregar animales</button></div></div><div id="pbody" class="hide"><div class="card"><div class="row"><b id="ptitle">Compra</b><span class="tag" id="pcount">0 animales</span></div><div id="plist"></div></div><div class="card"><h3>Agregar animal</h3><input id="pv" placeholder="Número visual (o chip)"><input id="prfid" inputmode="numeric" placeholder="RFID / chip completo"><button type="button" class="chip createOnly" data-rfid="prfid">Leer chip RFID</button><p id="gujarBleInline" class="muted" role="status">Bastón: conecte desde «Conexión de equipos» y escanee aquí directamente.</p><div class="rfidHint">Para buscar animales existentes puede escribir solo los <span class="rfidLast">últimos 4 dígitos</span>.</div><div class="grid"><input id="pw" aria-label="Peso de ingreso en kilogramos" style="font-size:1.65rem;font-weight:700" type="number" step=".1" placeholder="Peso kg *"><select id="psex" class="field"><option>Macho</option><option>Hembra</option></select></div><select id="pcolor" class="field"><option value="">Color</option><option>Negro</option><option>Blanco</option><option>Rojo</option><option>Café</option><option>Amarillo/Bayo</option><option>Gris/Cenizo</option><option>Barcino</option><option>Pintado/Manchado</option></select><input id="pmarks" placeholder="Señas particulares"><textarea id="paobs" placeholder="Observaciones del animal"></textarea><label class="photoPick">📷 Foto del animal<input id="pphoto" type="file" accept="image/*" capture="environment" style="display:none" onchange="photoChosen(this,'ppreview')"></label><div id="ppreview" class="muted"></div><button class="btn wide" onclick="addPurchaseAnimal()">＋ Agregar animal</button></div><button class="btn wide" onclick="finishPurchase()">✓ Cerrar ingreso</button></div></section>
 <section id="eventform" class="view"><button class="chip" onclick="go('records')">‹ Volver</button><h2 id="etitle">Nuevo evento</h2><div class="card"><div id="eventAnimalBlock"><label class="label">Identificar animal</label><input id="eq" autocomplete="off" placeholder="Leer chip, últimos 4 dígitos o ID visual" oninput="findEventAnimal()"><button type="button" class="chip createOnly" data-rfid="eq" id="eventRfidButton">Leer chip RFID</button><input type="hidden" id="ea"><div class="rfidHint">Acerque el lector RFID o escriba los últimos 4 dígitos del chip o el ID visual.</div><div id="ei" class="card"><span class="muted">Esperando identificación del animal…</span></div><button id="healthAddBtn" type="button" class="btn wide" style="display:none;margin-top:10px" onclick="addHealthAnimal()">✓ Guardar y agregar animal</button></div><div id="eventSetup"><label>Fecha<input id="ed" type="date"></label><div id="dynamic"></div></div><div id="healthListFixed" class="card" style="display:none;margin-top:12px"></div><label>Observaciones<textarea id="eobs"></textarea></label><button class="btn wide" onclick="saveEvent()">Guardar</button></div><div id="em"></div></section>
 <section id="equipment" class="view">
   <button type="button" class="chip" onclick="go('home')">‹ Inicio</button>
@@ -392,7 +392,7 @@ async function saveAnimalProfile(event,id){
 }
 function detail(id,noHistory){if(!noHistory){let lh=sessionStorage.getItem('gujar_list_html');sessionStorage.setItem('gujar_from_list',lh?'1':'0');if(sessionStorage.getItem('gujar_view')!=='detail')sessionStorage.setItem('gujar_prev_view',sessionStorage.getItem('gujar_view')||'home')}sessionStorage.setItem('gujar_animal_id',id);let a=A.find(x=>x.id===id);if(!a)return go('animals');let p=pr(a),w=ws(a),ee=E.filter(x=>x.animal_id===id),timeline=[];if(a.fecha_ingreso)timeline.push({fecha:a.fecha_ingreso,ord:0,html:'<b>Compra</b><br>'+one(a.peso_entrada)+' kg<span class="economic"> · '+money(a.precio_compra_kg)+'/kg · Total '+money(a.compra_valor)+'</span>'});w.forEach((x,i)=>{let prev=i?w[i-1]:null,gmd=prev?((+x.peso_kg-+prev.peso_kg)/Math.max(1,(new Date(x.fecha)-new Date(prev.fecha))/864e5)):null;timeline.push({fecha:x.fecha,ord:1,html:'<b>Pesaje</b><br>'+one(x.peso_kg)+' kg'+(gmd!=null?' · GMD '+one(gmd*1000)+' g/día':'')})});ee.filter(x=>!(x.tipo==='Compra'&&x.fecha===a.fecha_ingreso)).forEach(x=>{let parts=[x.producto,x.dosis?'Dosis '+x.dosis:'',x.causa?'Causa: '+x.causa:'',x.destino?'Destino: '+x.destino:'',x.tercero?'Comprador: '+x.tercero:''].filter(Boolean);timeline.push({fecha:x.fecha,ord:2,html:'<b>'+x.tipo+'</b><br>'+(parts.join(' · ')||x.observaciones||'')})});timeline.sort((x,y)=>x.fecha.localeCompare(y.fecha)||x.ord-y.ord);let sale=p.f?new Date(p.f+'T12:00:00').toLocaleDateString('es-CO',{month:'long',year:'numeric'}):'Sin proyección';$('dbody').innerHTML='<button class="chip" onclick="backFromDetail()">‹ Volver</button><h2>Animal '+animalName(a)+'</h2><div class="card">'+photoImg(a.foto_url,'photoMain','Foto del animal',"zoomPhoto(this.src)")+'<button class="chip" onclick="changePhoto('+a.id+')">📷 '+(a.foto_url?'Cambiar foto':'Agregar foto')+'</button><p><b>RFID '+(a.rfid||'—')+'</b></p><p>'+a.sexo+' · '+htmlEsc(a.color||'—')+' · '+a.finca+'</p><p><span class="tag">'+(a.estado||'Activo')+'</span></p><small>'+htmlEsc(a.senas||'')+'</small></div>'+animalProfileEditor(a)+'<div class="grid"><div class="card metric"><span class="label">Peso actual</span><b>'+one(p.p)+' kg</b></div><div class="card metric"><span class="label">'+p.source+'</span><b>'+(p.g?one(p.g*1000):'—')+'</b></div><div class="card metric"><span class="label">Meta</span><b>'+p.m+' kg</b></div><div class="card metric"><span class="label">Venta estimada</span><b style="font-size:16px">'+sale+'</b></div></div><button class="btn wide" onclick="pick('+a.id+')">⚖ Registrar pesaje</button><div class="card"><b>Hoja de Vida · cronológica</b>'+timeline.map(x=>'<div style="padding:11px 0;border-bottom:1px solid #eee"><span class="muted">'+gujarDateLabel(x.fecha)+'</span><div>'+x.html+'</div></div>').join('')+'</div>'+gujarAlertHTML(gujarAnimalAlerts(a));go('detail');gujarPlayAlerts(a,gujarAnimalAlerts(a))};setTimeout(()=>applyOfflinePhotos($('dbody')),0)
 function findEventAnimal(chipOnly=false){let q=($('eq').value||'').trim(),aa=fa();$('ea').value='';sessionStorage.removeItem('gujar_event_animal_id');if($('healthAddBtn')&&$('healthAddBtn').style.display!=='none'){$('healthAddBtn').disabled=true;$('healthAddBtn').textContent='✓ Guardar y agregar animal'}if(!q){$('ei').innerHTML='<span class="muted">Esperando identificación del animal…</span>';return}let exact=aa.filter(a=>String(a.rfid||'')===q||String(a.numero_visual||'').toLowerCase()===q.toLowerCase()),m=chipOnly?gujarChipMatches(q,aa):exact.length===1?exact:(q.length===4?aa.filter(a=>String(a.rfid||'').endsWith(q)):[]);if(m.length===1){let a=m[0],p=pr(a);$('ea').value=String(a.id);sessionStorage.setItem('gujar_event_animal_id',String(a.id));$('ei').innerHTML='<b>'+animalName(a)+' · '+a.sexo+'</b><p>Chip '+(a.rfid||'—')+' · '+a.finca+'</p><small>Último peso '+one(p.p)+' kg</small>';if((etype==='Vacunación'||etype==='Tratamiento')&&$('healthAddBtn').style.display!=='none'){$('healthAddBtn').disabled=false;$('healthAddBtn').textContent='✓ Grabar y agregar '+animalName(a)}if(etype==='Muerte'&&$('healthAddBtn').style.display!=='none'){$('healthAddBtn').disabled=false;$('healthAddBtn').textContent='✓ Guardar muerte de '+animalName(a)}if(etype==='Inventario'&&$('healthAddBtn').style.display!=='none'){$('healthAddBtn').disabled=false;$('healthAddBtn').textContent='✓ Grabar y agregar '+animalName(a);$('healthAddBtn').onclick=addInventoryAnimal}if(etype==='Venta'&&$('healthAddBtn').style.display!=='none'){if($('saleSelected'))$('saleSelected').innerHTML='<div class="card green"><b>Animal seleccionado</b><p>'+animalName(a)+'</p><small>Chip: '+(a.rfid||'—')+'</small></div>';if($('saleWeightBox'))$('saleWeightBox').style.display='block';$('healthAddBtn').disabled=true;$('healthAddBtn').textContent='✓ Grabar animal';$('healthAddBtn').onclick=addSaleAnimal;if($('saleWeight')){if(!chipOnly)setTimeout(()=>$('saleWeight')?.focus(),30);$('saleWeight').oninput=()=>{$('healthAddBtn').disabled=!(Number(String($('saleWeight').value||'').replace(',','.'))>0)}}}return}if(m.length>1){$('ei').innerHTML='<b>⚠ Coincidencia no única</b><p>Hay '+m.length+' animales con esa identificación. Lea el chip completo o ingrese el ID visual.</p>';return}$('ei').innerHTML=q.length<4?'<span class="muted">Continúe ingresando la identificación…</span>':'<b>Animal no encontrado</b><p>Revise el chip o ID visual y la finca seleccionada.</p>'}
-function fill(){if($('wq')&&!$('wq').value){$('wa').value='';$('wi').innerHTML='<span class="muted">Esperando identificación del animal…</span>'}}function findWeightAnimal(chipOnly=false){let q=($('wq').value||'').trim(),aa=fa();$('wa').value='';$('wgmd').innerHTML='';if(!q){$('wi').innerHTML='<span class="muted">Esperando identificación del animal…</span>';return}let m=chipOnly?gujarChipMatches(q,aa):gujarIdentifyAnimal(q,aa);if(m.length===1){$('wa').value=m[0].id;winfo();previewWeightGMD();return}if(m.length>1){$('wi').innerHTML='<b>⚠ Coincidencia no única</b><p>Hay '+m.length+' animales con esa identificación. Lea el chip completo o ingrese el ID visual.</p>';return}$('wi').innerHTML=q.length<4?'<span class="muted">Continúe ingresando la identificación…</span>':'<b>Animal no encontrado</b><p>Revise el chip o ID visual y la finca seleccionada.</p>'}let gujarAlertLast={};let gujarAlertAudioEnd=0;
+function fill(){if($('wq')&&!$('wq').value){$('wa').value='';$('wi').innerHTML='<span class="muted">Esperando identificación del animal…</span>'}}function findWeightAnimal(chipOnly=false){let q=($('wq').value||'').trim(),aa=fa();$('wa').value='';$('wgmd').innerHTML='';if(!q){MatrixScale.syncForm('wk');$('wi').innerHTML='<span class="muted">Esperando identificación del animal…</span>';return}let m=chipOnly?gujarChipMatches(q,aa):gujarIdentifyAnimal(q,aa);if(m.length===1){$('wa').value=m[0].id;MatrixScale.syncForm('wk');winfo();previewWeightGMD();return}MatrixScale.syncForm('wk');if(m.length>1){$('wi').innerHTML='<b>⚠ Coincidencia no única</b><p>Hay '+m.length+' animales con esa identificación. Lea el chip completo o ingrese el ID visual.</p>';return}$('wi').innerHTML=q.length<4?'<span class="muted">Continúe ingresando la identificación…</span>':'<b>Animal no encontrado</b><p>Revise el chip o ID visual y la finca seleccionada.</p>'}let gujarAlertLast={};let gujarAlertAudioEnd=0;
 const gujarHomeAlertKinds=new Map();
 
 function gujarAlertContext(){
@@ -621,7 +621,7 @@ function createWeightQueue(trial) {
         observaciones:$('wn').value.trim()||null,capturado_en:new Date().toISOString(),status:'pending',label:animalName(a)};
       await transaction('readwrite', s => s.add(row));
       $('wm').innerHTML='<div class="card green"><b>✓ Pesaje '+(trial?'de prueba ':'')+'guardado en este celular</b><p>Pendiente de sincronizar.'+(trial?' No se modificaron los datos reales.':'')+'</p></div>';let alerts=gujarAnimalAlerts(a,{g:(peso-(ws(a).length?+ws(a).at(-1).peso_kg:+a.peso_entrada))/Math.max(1,Math.round((new Date(fecha+'T12:00:00')-new Date((ws(a).length?ws(a).at(-1).fecha:a.fecha_ingreso)+'T12:00:00'))/D)),days:(()=>{let base=ws(a).at(-1),days=Math.max(1,Math.round((new Date(fecha+'T12:00:00')-new Date((base?.fecha||a.fecha_ingreso)+'T12:00:00'))/D)),g=(peso-(base?+base.peso_kg:+a.peso_entrada))/days;return gujarWeightSaleDays(a.sexo,peso,g,fecha)})()});$('wm').innerHTML+=gujarAlertHTML(alerts);gujarPlayAlerts(a,alerts);
-      $('wk').value=''; $('wn').value='';
+      MatrixScale.savedWeight('wk'); $('wk').value=''; $('wn').value='';
       await draw(); void sync();
     } catch(e) { alert(e.name==='ConstraintError'?'Ya existe un pesaje de prueba para este animal y fecha.':e.message); }
     finally { saving=false; }
@@ -1257,6 +1257,7 @@ function gujarChipMatches(code,list){
     const field=$(target);
     if(target==='prfid'){
       field.value=code;
+      MatrixScale.syncForm('pw');
       const duplicate=gujarChipMatches(code,[...A,...pitems]).length>0;
       return duplicate?'El chip ya figura en GUJAR. Revise antes de agregar el animal.':'Chip ingresado. Complete los datos del animal.';
     }
@@ -1437,7 +1438,7 @@ function gujarChipMatches(code,list){
 })();
 
 const MatrixScale=(()=>{
-  let port=null, reader=null, busy=false, latest=null;
+  let port=null, reader=null, busy=false;
   function decoder(address){
     let buffer='';
     return chunk=>{
@@ -1463,7 +1464,6 @@ const MatrixScale=(()=>{
     if(!navigator.serial){status('Abra GUJAR en Chrome o Edge de escritorio.');return}
     if(busy)return;
     busy=true;
-    latest=null;
     let opened=false;
     try{
       const baudRate=Number($('matrixBaud').value), parse=decoder($('matrixAddress').value);
@@ -1478,8 +1478,7 @@ const MatrixScale=(()=>{
         const {value,done}=await reader.read();
         if(done)break;
         for(const kg of parse(utf8.decode(value,{stream:true}))){
-          latest={kg,at:Date.now()};
-          status('Lectura del indicador: '+kg+' kg');
+          showWeight(kg,'Lectura del indicador: ');
         }
       }
       status('Báscula desconectada.');
@@ -1490,8 +1489,7 @@ const MatrixScale=(()=>{
       reader=null;
       if(opened)await port.close().catch(()=>{});
       port=null;
-      latest=null;
-      busy=false;
+        busy=false;
       $('matrixDisconnect').disabled=true;
     }
   }
@@ -1503,14 +1501,12 @@ const MatrixScale=(()=>{
   function receiveBleWeight(value){
     const raw=bleText.decode(value).replace(/\0+$/,'').trim();
     if(!/^[+-]?\d+(?:[.,]\d+)?$/.test(raw)){
-      latest=null;
-      status('Bluetooth conectado · lectura no reconocida.');
+        status('Bluetooth conectado · lectura no reconocida.');
       return;
     }
     const kg=Number(raw.replace(',','.'));
     if(!Number.isFinite(kg))return;
-    latest={kg,at:Date.now()};
-    status('Lectura Bluetooth: '+kg+' kg');
+    showWeight(kg,'Lectura Bluetooth: ');
   }
   function bleNotification(event){receiveBleWeight(event.target.value);}
   function clearBle(){
@@ -1518,7 +1514,6 @@ const MatrixScale=(()=>{
     bleDevice?.removeEventListener('gattserverdisconnected',bleDisconnected);
     bleCharacteristic=null;
     bleDevice=null;
-    latest=null;
     busy=false;
     $('matrixDisconnect').disabled=true;
   }
@@ -1530,7 +1525,6 @@ const MatrixScale=(()=>{
     if(busy)return;
     if(!navigator.bluetooth){status('Abra GUJAR en Chrome para Android o Chrome/Edge en Windows.');return;}
     busy=true;
-    latest=null;
     try{
       bleDevice=await navigator.bluetooth.requestDevice({
         filters:[{namePrefix:'Báscula Identigan'},{namePrefix:'BASCULA IDENTIGAN'},{namePrefix:'BÁSCULA IDENTIGAN'},{services:[bleService]}],
@@ -1545,10 +1539,10 @@ const MatrixScale=(()=>{
       if(!server.connected)throw Error('La báscula se desconectó.');
       bleDevice.addEventListener('gattserverdisconnected',bleDisconnected);
       $('matrixDisconnect').disabled=false;
-      if(!latest)status('Bluetooth conectado · esperando el peso.');
-      if(!latest&&characteristic.properties.read){
+      status('Bluetooth conectado · esperando el peso.');
+      if(characteristic.properties.read){
         const weight=await characteristic.readValue().catch(()=>null);
-        if(weight&&bleCharacteristic===characteristic&&!latest)receiveBleWeight(weight);
+        if(weight&&bleCharacteristic===characteristic)receiveBleWeight(weight);
       }
     }catch(error){
       const device=bleDevice;
@@ -1561,15 +1555,45 @@ const MatrixScale=(()=>{
     if(bleDevice?.gatt?.connected){const device=bleDevice;bleDisconnected();device.gatt.disconnect();return;}
     if(reader)await reader.cancel().catch(()=>{});
   }
-  function capture(){
-    if(!$('wa').value){alert('Identifica primero el animal.');return}
-    if(!latest||Date.now()-latest.at>2000||latest.kg<=0){alert('Espera una lectura positiva y reciente de la báscula.');return}
-    const kg=Number(latest.kg.toFixed(1));
-    if(kg<=0||!confirm('Peso del indicador: '+kg+' kg. Comprueba que coincida con el peso estable en pantalla. ¿Usar este peso?'))return;
-    $('wk').value=String(kg);
-    previewWeightGMD();
+  const formState={wk:{key:'',auto:null,manual:false,saved:false},pw:{key:'',auto:null,manual:false,saved:false}};
+  function formKey(id){
+    const identity=id==='wk'?$('wa').value:($('prfid').value.trim()||$('pv').value.trim());
+    return identity?JSON.stringify([$('farm').value,id==='pw'?purchase?.id:null,identity]):'';
   }
-  return {connect,connectBluetooth,disconnect,capture};
+  function syncForm(id){
+    const state=formState[id],field=$(id),key=formKey(id);
+    if(state.key!==key){
+      if(state.auto!==null&&field.value===state.auto){
+        field.value='';
+        if(id==='wk')previewWeightGMD();
+      }
+      Object.assign(state,{key,auto:null,manual:false,saved:false});
+    }
+    return state;
+  }
+  function savedWeight(id){syncForm(id).saved=true;}
+  function showWeight(kg,source){
+    status(source+kg+' kg');
+    const id=$('weigh').classList.contains('on')?'wk':
+      $('purchase').classList.contains('on')&&!$('pbody').classList.contains('hide')?'pw':null;
+    if(!id)return;
+    const state=syncForm(id),field=$(id),displayed=Number(kg.toFixed(1));
+    if(!state.key||state.manual||state.saved)return;
+    const value=displayed>0?String(displayed):'';
+    if(field.value===value)return;
+    field.value=value;
+    state.auto=value||null;
+    if(id==='wk')previewWeightGMD();
+  }
+  for(const id of ['wk','pw']){
+    $(id).addEventListener('input',()=>{
+      const state=syncForm(id);
+      state.manual=true;
+      state.auto=null;
+    });
+  }
+  for(const id of ['pv','prfid'])$(id).addEventListener('input',()=>syncForm('pw'));
+  return {connect,connectBluetooth,disconnect,syncForm,savedWeight};
 })();
 </script></body></html>
 
